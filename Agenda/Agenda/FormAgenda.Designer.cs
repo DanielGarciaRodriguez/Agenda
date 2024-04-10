@@ -75,6 +75,7 @@
             // 
             // dtBirthday
             // 
+            dtBirthday.Format = DateTimePickerFormat.Short;
             dtBirthday.Location = new Point(165, 79);
             dtBirthday.MaxDate = new DateTime(3000, 12, 31, 0, 0, 0, 0);
             dtBirthday.MinDate = new DateTime(1900, 1, 1, 0, 0, 0, 0);

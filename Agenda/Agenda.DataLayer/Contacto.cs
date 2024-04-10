@@ -11,8 +11,10 @@ public class Contacto {
     private const int TELEFONO_MAX_LENGTH = 9;
     private const int OBSERVACIONES_MAX_LENGTH = 500;
 
-
     private readonly int id;
+    private string nombre;
+    private string telefono;
+    private string? observaciones;
 
     public Contacto(int id, string nombre, DateTime fechaNacimiento, string telefono) {
         this.id = id;
@@ -30,40 +32,37 @@ public class Contacto {
         get { return id; }
     }
     public string Nombre {
-        get {
-            return Nombre;
-        }
+        get { return nombre; }
         set {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
             else if (value.Length > NOMBRE_MAX_LENGTH)
                 throw new ArgumentException($"{nameof(value)} exceeded max length {NOMBRE_MAX_LENGTH}");
+            nombre = value;
         }
     }
 
     public DateTime FechaNacimiento { get; set; }
 
     public string Telefono {
-        get {
-            return Telefono;
-        }
+        get { return telefono; }
         set {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
             else if (value.Length > NOMBRE_MAX_LENGTH)
                 throw new ArgumentException($"{nameof(value)} exceeded max length {TELEFONO_MAX_LENGTH}");
+            telefono = value;
         }
     }
 
     public string? Observaciones {
-        get {
-            return Observaciones;
-        }
+        get { return observaciones; }
         set {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
             else if (value.Length > OBSERVACIONES_MAX_LENGTH)
                 throw new ArgumentException($"{nameof(value)} exceeded max length {OBSERVACIONES_MAX_LENGTH}");
+            observaciones = value;
         }
     }
 }
