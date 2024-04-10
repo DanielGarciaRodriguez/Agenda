@@ -13,7 +13,33 @@ public class ContactoRepository {
     private void CloseConnection() => connection.Close();
 
     public List<Contacto> GetAll() {
-        throw new NotImplementedException();
+        OpenConnection();
+
+        string query = "select * from Contacto";
+        List<Contacto> list = new();
+
+        try {
+            if (connection is not null) {
+                SqlCommand cmd = new(query, connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read()) {
+                    list.Add(new Contacto(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetDateTime(2),
+                        reader.GetString(3),
+                        reader.GetString(4)
+                    ));
+                }
+            }
+        } catch (Exception ex) {
+            Console.WriteLine(ex.ToString()); //TODO
+        } finally {
+            CloseConnection();
+        }
+
+        return list;
     }
 
     public Contacto GetById(int id) {
