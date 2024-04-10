@@ -101,6 +101,7 @@
             // 
             tboxID.Location = new Point(165, 21);
             tboxID.Name = "tboxID";
+            tboxID.ReadOnly = true;
             tboxID.Size = new Size(67, 23);
             tboxID.TabIndex = 1;
             // 
