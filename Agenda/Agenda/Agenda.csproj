@@ -9,4 +9,8 @@
 		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Agenda.DataLayer\Agenda.DataLayer.csproj" />
+	</ItemGroup>
+
 </Project>
