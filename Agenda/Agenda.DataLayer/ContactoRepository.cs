@@ -37,11 +37,11 @@ public class ContactoRepository {
     private static void AddContacts(List<Contacto> list, SqlDataReader reader) {
         while (reader.Read()) {
             list.Add(new Contacto(
-                reader.GetInt32(0),
-                reader.GetString(1),
-                reader.GetDateTime(2),
-                reader.GetString(3),
-                reader.GetString(4)
+                id: reader.GetInt32(0),
+                nombre: reader.GetString(1),
+                fechaNacimiento: reader.GetDateTime(2),
+                telefono: reader.GetString(3),
+                observaciones: reader.GetString(4)
             ));
         }
     }
@@ -58,11 +58,11 @@ public class ContactoRepository {
                 SqlCommand cmd = new(query, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
                 return new Contacto(
-                    reader.GetInt32(0),
-                    reader.GetString(1),
-                    reader.GetDateTime(2),
-                    reader.GetString(3),
-                    reader.GetString(4)
+                    id: reader.GetInt32(0),
+                    nombre: reader.GetString(1),
+                    fechaNacimiento: reader.GetDateTime(2),
+                    telefono: reader.GetString(3),
+                    observaciones: reader.GetString(4)
                 );
             }
         } catch (Exception ex) {

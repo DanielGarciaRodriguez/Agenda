@@ -201,6 +201,7 @@
             bGuardar.TabIndex = 6;
             bGuardar.Text = "Guardar";
             bGuardar.UseVisualStyleBackColor = true;
+            bGuardar.Click += BGuardar_Click;
             // 
             // dgvContactos
             // 

@@ -6,13 +6,14 @@ namespace Agenda {
         private FormState _formState;
         public FormAgenda() {
             InitializeComponent();
+
             _formState = FormState.Viewing;
             UpdateReadonly();
 
             _contactoRepo = new ContactoRepository();
-            List<Contacto> contacts = _contactoRepo.GetAll();
-            dgvContactos.DataSource = contacts;
+            UpdateDatagridviews();
         }
+        private void UpdateDatagridviews() => dgvContactos.DataSource = _contactoRepo.GetAll();
 
         #region Update enabled items according to state
         private void UpdateReadonly() {
@@ -88,12 +89,38 @@ namespace Agenda {
         }
         #endregion Nuevo Button
 
+        #region Guardar Button
+        private void BGuardar_Click(object sender, EventArgs e) {
+            try {
+                if (_formState == FormState.Deleting) {
+                    _contactoRepo.DeleteById(int.Parse(tboxID.Text));
+                } else {
+                    Contacto contacto = new(
+                        id: tboxID.Text.Length > 0 ? int.Parse(tboxID.Text) : -1,
+                        nombre: tboxNombre.Text,
+                        fechaNacimiento: dtBirthday.Value,
+                        telefono: tboxTelefono.Text,
+                        observaciones: tboxObservaciones.Text.Length > 0 ? tboxObservaciones.Text : null
+                    );
+                }
+
+                _formState = FormState.Viewing;
+                UpdateReadonly();
+                UpdateDatagridviews();
+            } catch {
+
+            }
+        }
+        #endregion Guardar Button
+
         #region Cancel Button
         private void BCancelar_Click(object sender, EventArgs e) {
             _formState = FormState.Viewing;
             UpdateReadonly();
         }
         #endregion Cancel Button
+
+        
     }
 
     enum FormState {

@@ -23,7 +23,7 @@ public class Contacto {
         Telefono = telefono;
     }
 
-    public Contacto(int id, string nombre, DateTime fechaNacimiento, string telefono, string observaciones)
+    public Contacto(int id, string nombre, DateTime fechaNacimiento, string telefono, string? observaciones)
         : this(id, nombre, fechaNacimiento, telefono) {
         Observaciones = observaciones;
     }
