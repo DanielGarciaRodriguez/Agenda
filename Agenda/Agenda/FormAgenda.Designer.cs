@@ -191,6 +191,7 @@
             bCancelar.TabIndex = 5;
             bCancelar.Text = "Cancelar";
             bCancelar.UseVisualStyleBackColor = true;
+            bCancelar.Click += BCancelar_Click;
             // 
             // bGuardar
             // 
