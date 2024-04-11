@@ -97,10 +97,33 @@ public class ContactoRepository {
     }
     #endregion Create
 
+    #region Update
     public void Update(Contacto nuevoContacto) {
-        throw new NotImplementedException();
-    }
+        OpenConnection();
+        //TODO upgrade to avoid SQL injection
+        string query = $"update Contacto set Nombre = '{nuevoContacto.Nombre}', " +
+                       $"FechaNacimiento = '{nuevoContacto.FechaNacimiento}', " +
+                       $"Telefono = '{nuevoContacto.Telefono}'";
 
+        if (nuevoContacto.Observaciones is not null)
+            query += $", Observaciones = '{nuevoContacto.Observaciones}'";
+
+        query += $" where Id = {nuevoContacto.Id}";
+
+        try {
+            if (connection is not null) {
+                SqlCommand cmd = new(query, connection);
+                _ = cmd.ExecuteNonQuery();
+            }
+        } catch (Exception ex) {
+            Console.WriteLine(ex.ToString()); //TODO
+        } finally {
+            CloseConnection();
+        }
+    }
+    #endregion Update
+
+    #region DeleteById
     public void DeleteById(int id) {
         OpenConnection();
 
@@ -116,4 +139,5 @@ public class ContactoRepository {
             CloseConnection();
         }
     }
+    #endregion DeleteById
 }

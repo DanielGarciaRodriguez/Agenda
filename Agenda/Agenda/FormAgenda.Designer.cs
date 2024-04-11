@@ -183,6 +183,7 @@
             bModificar.TabIndex = 4;
             bModificar.Text = "Modificar";
             bModificar.UseVisualStyleBackColor = true;
+            bModificar.Click += BModificar_Click;
             // 
             // bCancelar
             // 
@@ -210,6 +211,7 @@
             dgvContactos.AllowUserToDeleteRows = false;
             dgvContactos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvContactos.Location = new Point(40, 288);
+            dgvContactos.MultiSelect = false;
             dgvContactos.Name = "dgvContactos";
             dgvContactos.ReadOnly = true;
             dgvContactos.RowTemplate.Height = 25;
