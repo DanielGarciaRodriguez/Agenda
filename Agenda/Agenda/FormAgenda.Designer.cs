@@ -163,6 +163,7 @@
             bNuevo.TabIndex = 2;
             bNuevo.Text = "Nuevo";
             bNuevo.UseVisualStyleBackColor = true;
+            bNuevo.Click += BNuevo_Click;
             // 
             // bEliminar
             // 
@@ -181,7 +182,6 @@
             bModificar.TabIndex = 4;
             bModificar.Text = "Modificar";
             bModificar.UseVisualStyleBackColor = true;
-            bModificar.Click += bModificar_Click;
             // 
             // bCancelar
             // 
