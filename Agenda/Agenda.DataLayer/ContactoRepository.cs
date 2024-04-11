@@ -102,6 +102,18 @@ public class ContactoRepository {
     }
 
     public void DeleteById(int id) {
-        throw new NotImplementedException();
+        OpenConnection();
+
+        string query = $"delete from Contacto where Id = {id}"; //TODO upgrade to avoid SQL injection
+        try {
+            if (connection is not null) {
+                SqlCommand cmd = new(query, connection);
+                _ = cmd.ExecuteNonQuery();
+            }
+        } catch (Exception ex) {
+            Console.WriteLine(ex.ToString()); //TODO
+        } finally {
+            CloseConnection();
+        }
     }
 }

@@ -173,6 +173,7 @@
             bEliminar.TabIndex = 3;
             bEliminar.Text = "Eliminar";
             bEliminar.UseVisualStyleBackColor = true;
+            bEliminar.Click += BEliminar_Click;
             // 
             // bModificar
             // 
@@ -214,6 +215,7 @@
             dgvContactos.RowTemplate.Height = 25;
             dgvContactos.Size = new Size(719, 150);
             dgvContactos.TabIndex = 7;
+            dgvContactos.SelectionChanged += DgvContactos_SelectionChanged;
             // 
             // FormAgenda
             // 
