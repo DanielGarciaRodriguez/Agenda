@@ -10,9 +10,18 @@ namespace Agenda {
             _formState = FormState.Viewing;
             UpdateReadonly();
 
+            SetInputsMaxLengths();
+
             _contactoRepo = new ContactoRepository();
             UpdateDatagridviews();
         }
+
+        private void SetInputsMaxLengths() {
+            tboxNombre.MaxLength = Contacto.GetNombreMaxLength();
+            tboxTelefono.MaxLength = Contacto.GetTelefonoMaxLength();
+            tboxObservaciones.MaxLength = Contacto.GetObservacionesMaxLength();
+        }
+
         private void UpdateDatagridviews() => dgvContactos.DataSource = _contactoRepo.GetAll();
 
         #region Update enabled items according to state
@@ -100,15 +109,20 @@ namespace Agenda {
                         nombre: tboxNombre.Text,
                         fechaNacimiento: dtBirthday.Value,
                         telefono: tboxTelefono.Text,
-                        observaciones: tboxObservaciones.Text.Length > 0 ? tboxObservaciones.Text : null
+                        observaciones: tboxObservaciones.Text
                     );
+
+                    if (contacto.Id == -1)
+                        _contactoRepo.Create(contacto);
+                    else
+                        _contactoRepo.Update(contacto);
                 }
 
                 _formState = FormState.Viewing;
                 UpdateReadonly();
                 UpdateDatagridviews();
-            } catch {
-
+            } catch (Exception ex) {
+                Console.WriteLine(ex); //TODO
             }
         }
         #endregion Guardar Button
@@ -117,6 +131,7 @@ namespace Agenda {
         private void BCancelar_Click(object sender, EventArgs e) {
             _formState = FormState.Viewing;
             UpdateReadonly();
+            UpdateDatagridviews();
         }
         #endregion Cancel Button
 
