@@ -36,12 +36,13 @@ public class ContactoRepository {
 
     private static void AddContacts(List<Contacto> list, SqlDataReader reader) {
         while (reader.Read()) {
+            object observaciones = reader.GetValue(4);
             list.Add(new Contacto(
-                reader.GetInt32(0),
-                reader.GetString(1),
-                reader.GetDateTime(2),
-                reader.GetString(3),
-                reader.GetString(4)
+                id: reader.GetInt32(0),
+                nombre: reader.GetString(1),
+                fechaNacimiento: reader.GetDateTime(2),
+                telefono: reader.GetString(3),
+                observaciones: observaciones is DBNull ? null : (string) observaciones
             ));
         }
     }
@@ -51,18 +52,18 @@ public class ContactoRepository {
     public Contacto? GetById(int id) {
         OpenConnection();
 
-        string query = $"select * from Contacto where Id = {id}"; //TODO
+        string query = $"select * from Contacto where Id = {id}"; //TODO upgrade to avoid SQL injection
 
         try {
             if (connection is not null) {
                 SqlCommand cmd = new(query, connection);
                 SqlDataReader reader = cmd.ExecuteReader();
                 return new Contacto(
-                    reader.GetInt32(0),
-                    reader.GetString(1),
-                    reader.GetDateTime(2),
-                    reader.GetString(3),
-                    reader.GetString(4)
+                    id: reader.GetInt32(0),
+                    nombre: reader.GetString(1),
+                    fechaNacimiento: reader.GetDateTime(2),
+                    telefono: reader.GetString(3),
+                    observaciones: reader.GetString(4)
                 );
             }
         } catch (Exception ex) {
@@ -77,7 +78,22 @@ public class ContactoRepository {
 
     #region Create
     public void Create(Contacto nuevoContacto) {
-        throw new NotImplementedException();
+        OpenConnection();
+        string values = nuevoContacto.ToInsertQueryFormat();
+        //TODO upgrade to avoid SQL injection
+        string query = nuevoContacto.Observaciones is null
+            ? $"insert into Contacto (Nombre, FechaNacimiento, Telefono) values ({values})"
+            : $"insert into Contacto (Nombre, FechaNacimiento, Telefono, Observaciones) values ({values})";
+        try {
+            if (connection is not null) {
+                SqlCommand cmd = new(query, connection);
+                _ = cmd.ExecuteNonQuery();
+            }
+        } catch (Exception ex) {
+            Console.WriteLine(ex.ToString()); //TODO
+        } finally {
+            CloseConnection();
+        }
     }
     #endregion Create
 

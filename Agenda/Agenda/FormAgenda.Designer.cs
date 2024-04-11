@@ -163,6 +163,7 @@
             bNuevo.TabIndex = 2;
             bNuevo.Text = "Nuevo";
             bNuevo.UseVisualStyleBackColor = true;
+            bNuevo.Click += BNuevo_Click;
             // 
             // bEliminar
             // 
@@ -181,7 +182,6 @@
             bModificar.TabIndex = 4;
             bModificar.Text = "Modificar";
             bModificar.UseVisualStyleBackColor = true;
-            bModificar.Click += bModificar_Click;
             // 
             // bCancelar
             // 
@@ -191,6 +191,7 @@
             bCancelar.TabIndex = 5;
             bCancelar.Text = "Cancelar";
             bCancelar.UseVisualStyleBackColor = true;
+            bCancelar.Click += BCancelar_Click;
             // 
             // bGuardar
             // 
@@ -200,6 +201,7 @@
             bGuardar.TabIndex = 6;
             bGuardar.Text = "Guardar";
             bGuardar.UseVisualStyleBackColor = true;
+            bGuardar.Click += BGuardar_Click;
             // 
             // dgvContactos
             // 
