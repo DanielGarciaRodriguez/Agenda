@@ -36,7 +36,7 @@
             lblNombre = new Label();
             lblID = new Label();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            bAñadir = new Button();
+            bNuevo = new Button();
             bEliminar = new Button();
             bModificar = new Button();
             bCancelar = new Button();
@@ -155,14 +155,14 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
-            // bAñadir
+            // bNuevo
             // 
-            bAñadir.Location = new Point(40, 248);
-            bAñadir.Name = "bAñadir";
-            bAñadir.Size = new Size(75, 23);
-            bAñadir.TabIndex = 2;
-            bAñadir.Text = "Añadir";
-            bAñadir.UseVisualStyleBackColor = true;
+            bNuevo.Location = new Point(40, 248);
+            bNuevo.Name = "bNuevo";
+            bNuevo.Size = new Size(75, 23);
+            bNuevo.TabIndex = 2;
+            bNuevo.Text = "Nuevo";
+            bNuevo.UseVisualStyleBackColor = true;
             // 
             // bEliminar
             // 
@@ -181,6 +181,7 @@
             bModificar.TabIndex = 4;
             bModificar.Text = "Modificar";
             bModificar.UseVisualStyleBackColor = true;
+            bModificar.Click += bModificar_Click;
             // 
             // bCancelar
             // 
@@ -222,7 +223,7 @@
             Controls.Add(bCancelar);
             Controls.Add(bModificar);
             Controls.Add(bEliminar);
-            Controls.Add(bAñadir);
+            Controls.Add(bNuevo);
             Controls.Add(grContacto);
             Name = "FormAgenda";
             Text = "Agenda";
@@ -246,7 +247,7 @@
         private TextBox tboxID;
         private TextBox tboxObservaciones;
         private ContextMenuStrip contextMenuStrip1;
-        private Button bAñadir;
+        private Button bNuevo;
         private Button bEliminar;
         private Button bModificar;
         private Button bCancelar;

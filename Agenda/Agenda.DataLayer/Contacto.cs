@@ -58,11 +58,11 @@ public class Contacto {
     public string? Observaciones {
         get { return observaciones; }
         set {
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(value));
-            else if (value.Length > OBSERVACIONES_MAX_LENGTH)
+            if (value is not null && value.Length > OBSERVACIONES_MAX_LENGTH)
                 throw new ArgumentException($"{nameof(value)} exceeded max length {OBSERVACIONES_MAX_LENGTH}");
             observaciones = value;
         }
     }
+
+    public string ToInsertQueryFormat() => $"{Nombre}, {FechaNacimiento}, {Telefono}, {Observaciones}";
 }
