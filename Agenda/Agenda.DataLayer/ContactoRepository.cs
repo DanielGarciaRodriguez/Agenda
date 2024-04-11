@@ -97,10 +97,13 @@ public class ContactoRepository {
     }
     #endregion Create
 
+    #region Update
     public void Update(Contacto nuevoContacto) {
         throw new NotImplementedException();
     }
+    #endregion Update
 
+    #region DeleteById
     public void DeleteById(int id) {
         OpenConnection();
 
@@ -116,4 +119,5 @@ public class ContactoRepository {
             CloseConnection();
         }
     }
+    #endregion DeleteById
 }

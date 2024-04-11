@@ -16,6 +16,7 @@ namespace Agenda {
             UpdateDatagridviews();
         }
 
+        #region Auxiliary misc functions
         private void SetInputsMaxLengths() {
             tboxNombre.MaxLength = Contacto.GetNombreMaxLength();
             tboxTelefono.MaxLength = Contacto.GetTelefonoMaxLength();
@@ -23,6 +24,22 @@ namespace Agenda {
         }
 
         private void UpdateDatagridviews() => dgvContactos.DataSource = _contactoRepo.GetAll();
+
+
+        private void LoadSelectedRow() {
+            /*
+                var selectedId = dgvContactos.SelectedRows[0].Cells[0].Value;
+                Contacto? selected = _contactoRepo.GetById((int) selectedId) ?? throw new InvalidDataException("ID no válida");
+            */
+            var selectedCells = dgvContactos.SelectedRows[0].Cells;
+
+            tboxID.Text = ((int) selectedCells[0].Value).ToString();
+            tboxNombre.Text = (string) selectedCells[1].Value;
+            dtBirthday.Value = (DateTime) selectedCells[2].Value;
+            tboxTelefono.Text = (string) selectedCells[3].Value;
+            tboxObservaciones.Text = (string) selectedCells[4].Value ?? string.Empty;
+        }
+        #endregion Auxiliary misc functions
 
         #region Update enabled items according to state
         private void UpdateReadonly() {
@@ -87,6 +104,8 @@ namespace Agenda {
         }
         #endregion Update enabled items according to state
 
+        #region Buttons handlers
+
         #region Nuevo Button
         private void BNuevo_Click(object sender, EventArgs e) {
             _formState = FormState.Writing;
@@ -111,27 +130,30 @@ namespace Agenda {
 
             _formState = FormState.Deleting;
             UpdateReadonly();
-
-            /*
-            var selectedId = dgvContactos.SelectedRows[0].Cells[0].Value;
-            Contacto? selected = _contactoRepo.GetById((int) selectedId) ?? throw new InvalidDataException("ID no válida");
-            */
-            var selectedCells = dgvContactos.SelectedRows[0].Cells;
-
-            tboxID.Text = ((int) selectedCells[0].Value).ToString();
-            tboxNombre.Text = (string) selectedCells[1].Value;
-            dtBirthday.Value = (DateTime) selectedCells[2].Value;
-            tboxTelefono.Text = (string) selectedCells[3].Value;
-            tboxObservaciones.Text = (string) selectedCells[4].Value ?? string.Empty;
+            LoadSelectedRow();
         }
         #endregion Eliminar Button
+
+        #region Modificar Button
+        private void BModificar_Click(object sender, EventArgs e) {
+            if (dgvContactos.SelectedRows.Count == 0) {
+                _formState = FormState.Viewing;
+                UpdateReadonly();
+                return;
+            }
+
+            _formState = FormState.Writing;
+            UpdateReadonly();
+            LoadSelectedRow();
+        }
+        #endregion Modificar Button
 
         #region Guardar Button
         private void BGuardar_Click(object sender, EventArgs e) {
             try {
-                if (_formState == FormState.Deleting) {
+                if (_formState == FormState.Deleting)
                     _contactoRepo.DeleteById(int.Parse(tboxID.Text));
-                } else {
+                else {
                     Contacto contacto = new(
                         id: tboxID.Text.Length > 0 ? int.Parse(tboxID.Text) : -1,
                         nombre: tboxNombre.Text,
@@ -164,9 +186,9 @@ namespace Agenda {
         }
         #endregion Cancel Button
 
-        private void DgvContactos_SelectionChanged(object sender, EventArgs e) {
-            UpdateReadonly();
-        }
+        #endregion Buttons handlers
+
+        private void DgvContactos_SelectionChanged(object sender, EventArgs e) => UpdateReadonly();
     }
 
     enum FormState {
