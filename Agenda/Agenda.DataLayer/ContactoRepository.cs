@@ -82,12 +82,21 @@ public class ContactoRepository {
         string query = nuevoContacto.Observaciones is null
             ? $"insert into Contacto (Nombre, FechaNacimiento, Telefono) values ({values})"
             : $"insert into Contacto (Nombre, FechaNacimiento, Telefono, Observaciones) values ({values})";
+        SqlCommand cmd;
+        SqlTransaction? transaction = null;
         try {
-            SqlCommand cmd = new(query, connection);
+            transaction = connection.BeginTransaction();
+            cmd = new(query, connection) {
+                Transaction = transaction
+            };
+
             SubstituteSQLCommandParams(nuevoContacto, cmd);
             _ = cmd.ExecuteNonQuery();
+
+            transaction.Commit();
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString()); //TODO
+            transaction?.Rollback();
         } finally {
             CloseConnection();
         }
@@ -102,15 +111,21 @@ public class ContactoRepository {
                        $"Telefono = @telefono, " + 
                        $"Observaciones = @observaciones" + 
                        $" where Id = @id";
+        SqlCommand cmd;
+        SqlTransaction? transaction = null;
         try {
-            SqlCommand cmd = new(query, connection);
+            transaction = connection.BeginTransaction();
+            cmd = new(query, connection) {
+                Transaction = transaction
+            };
             SubstituteSQLCommandParams(nuevoContacto, cmd);
             SubstituteCommandID(nuevoContacto.Id, cmd);
 
             _ = cmd.ExecuteNonQuery();
-            Console.WriteLine(cmd.CommandText);
+            transaction.Commit();
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString()); //TODO
+            transaction?.Rollback();
         } finally {
             CloseConnection();
         }
@@ -122,12 +137,20 @@ public class ContactoRepository {
         OpenConnection();
 
         string query = "delete from Contacto where Id = @id";
+        SqlCommand cmd;
+        SqlTransaction? transaction = null;
         try {
-            SqlCommand cmd = new(query, connection);
-            cmd.Parameters.AddWithValue("id", id);
+            transaction = connection.BeginTransaction();
+            cmd = new(query, connection) {
+                Transaction = transaction
+            };
+
+            SubstituteCommandID(id, cmd);
             _ = cmd.ExecuteNonQuery();
+            transaction.Commit();
         } catch (Exception ex) {
             Console.WriteLine(ex.ToString()); //TODO
+            transaction?.Rollback();
         } finally {
             CloseConnection();
         }
