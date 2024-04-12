@@ -1,4 +1,4 @@
-﻿namespace Agenda.DataLayer;
+﻿namespace Agenda.DataLayer.Entities;
 public class Contacto {
     private const int NOMBRE_MAX_LENGTH = 100;
     private const int TELEFONO_MAX_LENGTH = 9;
@@ -67,9 +67,9 @@ public class Contacto {
     public static int GetObservacionesMaxLength() => OBSERVACIONES_MAX_LENGTH;
 
     public string ToInsertQueryFormat() {
-        string result = $"'{Nombre}', '{FechaNacimiento}', '{Telefono}'";
+        string result = "@nombre, @fechaNacimiento, @telefono";
         if (Observaciones is not null)
-            result += $", '{Observaciones}'";
+            result += ", @observaciones";
         return result;
     }
 }
