@@ -1,6 +1,8 @@
 using Agenda.DataLayer;
+using Agenda.DataLayer.Entities;
 
-namespace Agenda {
+namespace Agenda
+{
     public partial class FormAgenda : Form {
         private readonly ContactoRepository _contactoRepo;
         private FormState _formState;
