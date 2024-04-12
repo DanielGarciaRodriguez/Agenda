@@ -107,6 +107,8 @@ public class ContactoRepository {
 
         if (nuevoContacto.Observaciones is not null)
             query += $", Observaciones = '{nuevoContacto.Observaciones}'";
+        else
+            query += $", Observaciones = NULL";
 
         query += $" where Id = {nuevoContacto.Id}";
 
